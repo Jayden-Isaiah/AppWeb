@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/TP5.css">
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Section pour sessionStorage</th>
+                <th>Section pour localStorage</th>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="centre">
+                    <select name="session" id="ss">
+                        <option value="rougeBleu">Texte rouge fond bleu</option>
+                        <option value="bleuRouge">Texte bleu fond rouge</option>
+                        <option value="blancNoir">Texte blanc fond noir</option>
+                        <option value="rougeNoir">Texte rouge fond noir</option>
+                    </select>
+                </td>
+                <td class="centre">
+                    <select name="local" id="ls">
+                        <option value="rougeBleu">Texte rouge fond bleu</option>
+                        <option value="bleuRouge">Texte bleu fond rouge</option>
+                        <option value="blancNoir">Texte blanc fond noir</option>
+                        <option value="rougeNoir">Texte rouge fond noir</option>
+                    </select>
+                </td>            
+            </tr>
+            <tr>            
+                <td id="txtsession">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</td>
+                <td id="txtlocal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</td>
+            </tr>
+            <tr>
+                <td class="centre"><button onclick="session();">enregistrer dans sessionStorage</button></td>
+                <td class="centre"><button onclick="local();">enregistrer dans localStorage</button></td>
+            </tr>  
+            <tr>
+                <td colspan="2" class="centre"><button onclick="restaure();">afficher selon la couleur choisi</button></td>
+            </tr>          
+        </table>
+    </div>
+
+    <div>
+        
+        
+    </div>
+    <span id="demo"></span>
+
+    <script>
+        function restaure(){
+            //va chercher la couleur de la session
+            let couleur = sessionStorage.getItem("scouleur");
+            let bgcouleur = sessionStorage.getItem("bgcouleur");            
+            //puis affiche a l'ecran
+            document.getElementById("txtsession").style.backgroundColor = bgcouleur;
+            document.getElementById("txtsession").style.color = couleur;
+            //puis fait la meme chose avec localStorage
+            couleur = localStorage.getItem("scouleur");
+            bgcouleur = localStorage.getItem("bgcouleur");            
+            //puis affiche a l'ecran
+            document.getElementById("txtlocal").style.backgroundColor = bgcouleur;
+            document.getElementById("txtlocal").style.color = couleur;            
+        }
+        function dispatch(choix,selection){
+            let couleur;
+            let bgcouleur;
+            switch(choix){ //selon le texte choisi on affiche avec les bonnes couleurs
+                case "Texte rouge fond bleu":
+                    couleur = "red";
+                    bgcouleur = "blue";        
+                break;
+                case "Texte bleu fond rouge":
+                    couleur = "blue";
+                    bgcouleur = "red";                
+                break;
+                case "Texte rouge fond noir":
+                    couleur = "red";
+                    bgcouleur = "black";                 
+                break;
+                case "Texte blanc fond noir":
+                    couleur = "white";
+                    bgcouleur = "black";                 
+                break;                                                
+            }
+            if (selection == 'session') {
+                sessionStorage.setItem("scouleur",couleur);
+                sessionStorage.setItem("bgcouleur",bgcouleur);
+            }
+            else{
+                localStorage.setItem("scouleur",couleur);
+                localStorage.setItem("bgcouleur",bgcouleur);                
+            }
+        }
+        function session(){  //sauvegarde dans localStorage        
+            let ss = document.getElementById("ss"); //ss pointe sur l'objet avec l'id ss
+            let index = ss.selectedIndex; //index va chercher l'index choisi
+            let choix = ss.options[index].text; //avec l'index on va chercher le texte
+            dispatch(choix,"session");
+        }
+        function local(){  //sauvegarde dans localStorage        
+            let ls = document.getElementById("ls"); //ss pointe sur l'objet avec l'id ss
+            let index = ls.selectedIndex; //index va chercher l'index choisi
+            let choix = ls.options[index].text; //avec l'index on va chercher le texte
+            dispatch(choix,"local");
+        }
+    </script>
+</body>
+</html>
